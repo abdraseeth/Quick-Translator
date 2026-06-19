@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickTranslate - AI Language Translation Tool</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Link to Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons via CDN for crisp vector graphics -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Decorative background blobs for rich modern glassmorphic look -->
+    <div class="background-decor">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Application Header -->
+        <header>
+            <div class="logo">
+                <i data-lucide="languages" class="logo-icon"></i>
+                <h1>QuickTranslate</h1>
+            </div>
+            <p class="subtitle">AI Language Translation Tool</p>
+        </header>
+
+        <!-- Main Translation Card -->
+        <main class="translator-card">
+            <!-- Auto-detect Toggle -->
+            <div class="auto-detect-row">
+                <label class="auto-detect-label" for="autoDetect">
+                    <input type="checkbox" id="autoDetect">
+                    <span class="custom-checkbox"></span>
+                    <span>Auto-detect source language</span>
+                </label>
+            </div>
+
+            <!-- Language Selection Controls -->
+            <div class="controls-row">
+                <!-- Source Language Dropdown -->
+                <div class="select-wrapper">
+                    <label for="srcLanguage" class="sr-only">Source Language</label>
+                    <select id="srcLanguage" class="lang-select">
+                        <!-- Options will be dynamically populated from languages.js -->
+                    </select>
+                </div>
+
+                <!-- Swap Language Button -->
+                <button id="swapLanguages" class="icon-btn swap-btn" title="Swap Languages" aria-label="Swap source and target languages">
+                    <i data-lucide="arrow-left-right"></i>
+                </button>
+
+                <!-- Target Language Dropdown -->
+                <div class="select-wrapper">
+                    <label for="tgtLanguage" class="sr-only">Target Language</label>
+                    <select id="tgtLanguage" class="lang-select">
+                        <!-- Options will be dynamically populated from languages.js -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Text Areas Grid -->
+            <div class="text-grid">
+                <!-- Input Box -->
+                <div class="text-box input-box">
+                    <textarea id="inputText" placeholder="Type or paste text to translate..." maxlength="5000"></textarea>
+                    <div class="box-actions">
+                        <div class="action-buttons">
+                            <!-- Text-to-Speech for input text -->
+                            <button id="srcSpeech" class="icon-btn action-btn" title="Listen Input" aria-label="Read input text aloud" disabled>
+                                <i data-lucide="volume-2"></i>
+                            </button>
+                            <!-- Clear Input Button -->
+                            <button id="clearInput" class="icon-btn action-btn" title="Clear Text" aria-label="Clear input text">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                        <div class="char-count">
+                            <span id="charCountCurrent">0</span>/5000
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Output Box -->
+                <div class="text-box output-box">
+                    <textarea id="outputText" placeholder="Translation will appear here..." readonly></textarea>
+                    <div class="box-actions">
+                        <div class="action-buttons">
+                            <!-- Text-to-Speech for translated text -->
+                            <button id="tgtSpeech" class="icon-btn action-btn" title="Listen Translation" aria-label="Read translation aloud" disabled>
+                                <i data-lucide="volume-2"></i>
+                            </button>
+                        </div>
+                        <!-- Copy Translation Button -->
+                        <button id="copyBtn" class="copy-btn" title="Copy Translation" aria-label="Copy translated text to clipboard" disabled>
+                            <i data-lucide="copy" class="copy-icon"></i>
+                            <span>Copy</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Translate Button -->
+            <div class="translate-action">
+                <button id="translateBtn" class="translate-btn">
+                    <span>Translate Text</span>
+                    <i data-lucide="arrow-right" class="btn-arrow"></i>
+                </button>
+            </div>
+        </main>
+        
+        <!-- Application Footer -->
+        <footer>
+            <p>Powered by MyMemory Translation API. Simple, clean, and interactive.</p>
+        </footer>
+    </div>
+
+    <!-- Include Javascript Files (First languages database, then main logic) -->
+    <script src="languages.js?v=2"></script>
+    <script src="script.js?v=2"></script>
+</body>
+</html>

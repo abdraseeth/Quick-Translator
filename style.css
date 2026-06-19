@@ -1,0 +1,609 @@
+/* ==========================================================================
+   QUICKTRANSLATE CSS STYLESHEET
+   A modern, dark-themed, glassmorphic design system using CSS variables.
+   Clean, responsive, and thoroughly commented for beginner learning.
+   ========================================================================== */
+
+/* 1. DESIGN SYSTEM VARIABLES */
+:root {
+    /* Fonts */
+    --font-heading: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-body: 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, sans-serif;
+
+    /* Theme Colors (Modern Dark Palette with Vibrant Indigo/Violet Accents) */
+    --color-bg-dark: #bbbecc;
+    --color-card-bg: rgba(17, 18, 27, 0.65);
+    --color-card-border: rgba(255, 255, 255, 0.08);
+    --color-card-shadow: rgba(0, 0, 0, 0.4);
+    
+    --color-primary: #6366f1;       /* Indigo */
+    --color-primary-hover: #4f46e5;
+    --color-primary-glow: rgba(99, 102, 241, 0.3);
+    
+    --color-secondary: #a855f7;     /* Purple */
+    --color-secondary-hover: #9333ea;
+    
+    --color-text-main: #f3f4f6;     /* Off-white */
+    --color-text-muted: #9ca3af;    /* Slate Gray */
+    --color-text-placeholder: #6b7280;
+    
+    --color-input-bg: rgba(10, 11, 17, 0.6);
+    --color-input-focus: rgba(99, 102, 241, 0.15);
+    
+    /* Layout Tokens */
+    --radius-lg: 20px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. RESET & BASE STYLES */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 3. DECORATIVE BACKGROUND BLOBS (RICH AESTHETICS) */
+.background-decor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.45;
+}
+
+.circle-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--color-primary) 0%, transparent 70%);
+    top: -10%;
+    left: -10%;
+    animation: floating-slow 15s infinite alternate;
+}
+
+.circle-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--color-secondary) 0%, transparent 70%);
+    bottom: -15%;
+    right: -10%;
+    animation: floating-slow 20s infinite alternate-reverse;
+}
+
+@keyframes floating-slow {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        transform: translate(40px, 30px) scale(1.1);
+    }
+}
+
+/* Helper accessibility class for screen readers only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 4. LAYOUT CONTAINER */
+.app-container {
+    width: 100%;
+    max-width: 960px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 5. HEADER STYLES */
+header {
+    text-align: center;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    color: var(--color-primary);
+    filter: drop-shadow(0 0 8px var(--color-primary-glow));
+}
+
+.logo h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--color-text-main) 30%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* 6. MAIN TRANSLATOR CARD (GLASSMORPHISM) */
+.translator-card {
+    background: var(--color-card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 40px var(--color-card-shadow);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.translator-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
+
+/* 7. CONTROLS ROW */
+.controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.select-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.lang-select {
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-main);
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: var(--transition-fast);
+}
+
+.lang-select:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lang-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-glow);
+}
+
+/* Add custom arrow indicator to select dropdowns */
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid var(--color-text-muted);
+    pointer-events: none;
+    transition: var(--transition-fast);
+}
+
+.select-wrapper:hover::after {
+    border-top-color: var(--color-text-main);
+}
+
+/* General Icon Button styling */
+.icon-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-card-border);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-main);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.icon-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Swap Button Specific Styling */
+.swap-btn {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.swap-btn:hover {
+    transform: rotate(180deg);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.swap-btn:active {
+    transform: rotate(180deg) scale(0.9);
+}
+
+/* 8. TEXT AREA GRID */
+.text-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.text-box {
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 250px;
+    position: relative;
+    transition: var(--transition-normal);
+}
+
+.text-box:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-input-focus);
+}
+
+.text-box textarea {
+    width: 100%;
+    flex: 1;
+    background: transparent;
+    border: none;
+    resize: none;
+    color: var(--color-text-main);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    outline: none;
+    padding-bottom: 12px;
+}
+
+.text-box textarea::placeholder {
+    color: var(--color-text-placeholder);
+}
+
+/* Box Actions row (Contains voice, clear, copy buttons and character count) */
+.box-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: auto;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-sm);
+}
+
+.char-count {
+    font-size: 0.8rem;
+    color: var(--color-text-placeholder);
+    font-weight: 500;
+}
+
+/* Copy button specific style */
+.copy-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-card-border);
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition-fast);
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-text-main);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.copy-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Styling for "Copied!" success state */
+.copy-btn.success {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #10b981;
+}
+
+/* 9. TRANSLATE BUTTON */
+.translate-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.translate-btn {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    border: none;
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px var(--color-primary-glow);
+    transition: var(--transition-normal);
+}
+
+.translate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    background: linear-gradient(135deg, #7477f8 0%, #b366ff 100%);
+}
+
+.translate-btn:active {
+    transform: translateY(1px);
+}
+
+.btn-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--transition-fast);
+}
+
+.translate-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* Loading/Translating state styling */
+.translate-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.translate-btn.loading .btn-arrow {
+    animation: rotate-spinner 1s linear infinite;
+}
+
+@keyframes rotate-spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 10. FOOTER STYLES */
+footer {
+    text-align: center;
+    color: var(--color-text-placeholder);
+    font-size: 0.85rem;
+}
+
+/* 11. CUSTOM SCROLLBARS FOR TEXTAREAS */
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* 12. RESPONSIVENESS (MOBILE FRIENDLY) */
+@media (max-width: 768px) {
+    .app-container {
+        padding: 16px;
+    }
+    
+    .logo h1 {
+        font-size: 2rem;
+    }
+    
+    .translator-card {
+        padding: 16px;
+        gap: 16px;
+    }
+    
+    .controls-row {
+        gap: 8px;
+    }
+    
+    .lang-select {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+    }
+    
+    .select-wrapper::after {
+        right: 14px;
+    }
+    
+    .swap-btn {
+        width: 42px;
+        height: 42px;
+    }
+    
+    .text-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .text-box {
+        min-height: 200px;
+    }
+    
+    .translate-action {
+        justify-content: stretch;
+    }
+    
+    .translate-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* 13. AUTO-DETECT CHECKBOX & DISABLED SELECT STYLES */
+.auto-detect-row {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 4px;
+}
+
+.auto-detect-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    user-select: none;
+    transition: var(--transition-fast);
+}
+
+.auto-detect-label:hover {
+    color: var(--color-text-main);
+}
+
+.auto-detect-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.custom-checkbox {
+    width: 16px;
+    height: 16px;
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: 4px;
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.auto-detect-label:hover .custom-checkbox {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.auto-detect-label input:checked ~ .custom-checkbox {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 8px var(--color-primary-glow);
+}
+
+.custom-checkbox::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.auto-detect-label input:checked ~ .custom-checkbox::after {
+    display: block;
+}
+
+.lang-select:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: rgba(10, 11, 17, 0.3);
+    border-color: rgba(255, 255, 255, 0.03);
+}
+
+.select-wrapper.disabled::after {
+    opacity: 0.3;
+}
+
